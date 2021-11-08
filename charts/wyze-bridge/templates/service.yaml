@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "wyze-bridge.fullname" . }}
+  labels:
+    {{- include "wyze-bridge.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.rtsp-port }}
+      targetPort: rtsp
+      protocol: TCP
+      name: rtsp
+    - port: {{ .Values.service.hls-port }}
+      targetPort: hls
+      protocol: TCP
+      name: hls
+    - port: {{ .Values.service.rmtp-port }}
+      targetPort: rmtp
+      protocol: TCP
+      name: rmtp
+  selector:
+    {{- include "wyze-bridge.selectorLabels" . | nindent 4 }}
