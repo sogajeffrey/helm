@@ -7,15 +7,15 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.rtsp-port }}
+    - port: {{ .Values.service.rtspPort }}
       targetPort: rtsp
       protocol: TCP
       name: rtsp
-    - port: {{ .Values.service.hls-port }}
+    - port: {{ .Values.service.hlsPort }}
       targetPort: hls
       protocol: TCP
       name: hls
-    - port: {{ .Values.service.rmtp-port }}
+    - port: {{ .Values.service.rmtpPort }}
       targetPort: rmtp
       protocol: TCP
       name: rmtp

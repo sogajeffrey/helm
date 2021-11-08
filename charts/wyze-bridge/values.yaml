@@ -39,9 +39,9 @@ wyze:
 
 service:
   type: ClusterIP
-  rtsp-port: 8554
-  hls-port: 8888
-  rmtp-port: 1935
+  rtspPort: 8554
+  hlsPort: 8888
+  rmtpPort: 1935
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
