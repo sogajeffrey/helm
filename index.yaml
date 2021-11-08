@@ -13,6 +13,16 @@ entries:
     version: 0.1.0
   wyze-bridge:
   - apiVersion: v2
+    appVersion: 1.0.2
+    created: "2021-11-08T21:03:13.626426498Z"
+    description: A Helm chart for deploying Wyze Bridge to Kubernetes
+    digest: ffd35d153862f35a518636049504b78b1b75cdbffd9d7f07417f270a933d6eea
+    name: wyze-bridge
+    type: application
+    urls:
+    - https://github.com/sogajeffrey/helm/releases/download/wyze-bridge-0.1.1/wyze-bridge-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: v1.0.2
     created: "2021-11-08T20:53:52.847903441Z"
     description: A Helm chart for deploying Wyze Bridge to Kubernetes
