@@ -11,4 +11,15 @@ entries:
     urls:
     - https://github.com/sogajeffrey/helm/releases/download/helloworldchart-0.1.0/helloworldchart-0.1.0.tgz
     version: 0.1.0
+  wyze-bridge:
+  - apiVersion: v2
+    appVersion: v1.0.2
+    created: "2021-11-08T20:53:52.847903441Z"
+    description: A Helm chart for deploying Wyze Bridge to Kubernetes
+    digest: bdc11aed066eba9b656c289e68725199779c40fce3af9bf0c0ae6446dbb2443e
+    name: wyze-bridge
+    type: application
+    urls:
+    - https://github.com/sogajeffrey/helm/releases/download/wyze-bridge-0.1.0/wyze-bridge-0.1.0.tgz
+    version: 0.1.0
 generated: "2021-11-08T19:08:27.995450489Z"
