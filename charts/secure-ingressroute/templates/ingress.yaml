@@ -1,0 +1,31 @@
+{{- $fullName := include "secure-ingressroute.fullname" . -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name:  {{ $fullName }}
+  labels:
+    {{- include "secure-ingressroute.labels" . | nindent 4 }}
+spec:
+  entryPoints:
+    {{- range .Values.entryPoints }}
+    - {{ . }}
+    {{- end }}
+  routes:
+    {{- range .Values.routes }}
+    - match: {{ .routeMatch }}
+      kind: Rule
+      {{- if .middlewares }}
+      middlewares: 
+        {{- range .middlewares }}
+        - name: {{ .name }}
+          {{- if .namespace }}
+          namespace: {{ .namespace }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      services:
+        - name: {{ .service.name | quote }}
+          port: {{ .service.port }}
+    {{- end }}  
+  tls:
+    secretName: {{ .Values.tls.secretName }}
