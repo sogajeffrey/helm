@@ -16,8 +16,15 @@ jobs:
           python-version: 3.7
       - name: Setup chart-testing (lint)
         uses: helm/chart-testing-action@v2.1.0
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed)
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
       - name: run lint
-        run: cd charts && ct lint
+        run: ct lint
   lint-docs:
     runs-on: ubuntu-latest
     needs: lint-chart
