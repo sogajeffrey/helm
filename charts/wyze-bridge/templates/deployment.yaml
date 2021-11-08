@@ -34,12 +34,12 @@ spec:
           - name: WYZE_EMAIL
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.wyze.existingSecret.secretName | default include "wyze-bridge.fullname" . }}
+                name: {{ .Values.wyze.existingSecret.secretName | default .Chart.Name }}
                 key: {{ .Values.wyze.existingSecret.usernameKey | default "wyze-username" }}
           - name: WYZE_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.wyze.existingSecret.secretName | default include "wyze-bridge.fullname" . }}
+                name: {{ .Values.wyze.existingSecret.secretName | default .Chart.Name }}
                 key: {{ .Values.wyze.existingSecret.passwordKey | default "wyze-password" }}
           ports:
             - name: rmtp
