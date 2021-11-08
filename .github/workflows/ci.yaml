@@ -27,8 +27,8 @@ jobs:
       #     if [[ -n "$changed" ]]; then
       #       echo "::set-output name=changed::true"
       #     fi
-      - name: run lint
-        run: ct lint
+      # - name: run lint
+      #   run: ct lint
   lint-docs:
     runs-on: ubuntu-latest
     needs: lint-chart
