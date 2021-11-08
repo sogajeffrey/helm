@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wyze-bridge.fullname" . }}
+  labels:
+    {{- include "wyze-bridge.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "wyze-bridge.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "wyze-bridge.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: WYZE_EMAIL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.wyze.existingSecret.secretName | default .Chart.Name }}
+                key: {{ .Values.wyze.existingSecret.usernameKey | default "wyze-username" }}
+          - name: WYZE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.wyze.existingSecret.secretName | default .Chart.Name }}
+                key: {{ .Values.wyze.existingSecret.passwordKey | default "wyze-password" }}
+          ports:
+            - name: rmtp
+              containerPort: 1935
+              protocol: TCP
+            - name: rstp
+              containerPort: 8554
+              protocol: TCP
+            - name: hls
+              containerPort: 8888
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 8554
+          readinessProbe:
+            tcpSocket:
+              port: 8554
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
