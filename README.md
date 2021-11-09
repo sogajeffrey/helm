@@ -3,6 +3,7 @@
 ## Charts
 * Wyze Bridge - Creates a secret, deployment and service for wyze bridge
 * secure-ingressroute - Creates a Cert manager certificate and Traefik Ingressroute 
+* cloudflare-ddns - Creates a Secret, configmap, and deployment for https://github.com/oznu/docker-cloudflare-ddns 
 
 ## To Use 
 
