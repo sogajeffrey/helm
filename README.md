@@ -4,6 +4,7 @@
 * Wyze Bridge - Creates a secret, deployment and service for wyze bridge
 * secure-ingressroute - Creates a Cert manager certificate and Traefik Ingressroute 
 * cloudflare-ddns - Creates a Secret, configmap, and deployment for https://github.com/oznu/docker-cloudflare-ddns 
+* kube-api-lb - Creates a configmap for nginx.conf and nginx deployment to load balance between mutliple kube master nodes
 
 ## To Use 
 
