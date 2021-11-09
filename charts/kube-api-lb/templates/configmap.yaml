@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}
+data:
+  nginx.conf: |
+    user  nginx;
+    worker_processes  auto;
+
+    error_log  /dev/stdout notice;
+    pid        /var/run/nginx.pid;
+
+
+    events {
+        worker_connections  1024;
+    }
+    stream  {
+    log_format basic '$remote_addr [$time_local] '
+                    '$protocol $status $bytes_sent $bytes_received '
+                    '$session_time';
+
+    access_log /dev/stdout basic buffer=32k;
+    upstream apis {
+        {{- range .nodes }}
+        server {{ . }}:{{ .Values.kube.port }};
+        {{- end }}
+    }
+    server {
+        listen {{ .Values.kube.port }};
+        proxy_pass apis;
+    }
+
+    }
