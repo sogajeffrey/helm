@@ -25,7 +25,12 @@ spec:
       {{- end }}
       services:
         - name: {{ .service.name | quote }}
+          {{- if .service.port }}
           port: {{ .service.port }}
+          {{- end }}
+          {{- if .service.kind }}
+          kind: {{ .service.kind }}
+          {{- end }}
     {{- end }}  
   tls:
     secretName: {{ .Values.tls.secretName }}
