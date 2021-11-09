@@ -1,0 +1,17 @@
+{{- $fullName := include "secure-ingressroute.fullname" . -}}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "secure-ingressroute.labels" . | nindent 4 }}
+spec:
+  commonName: {{ .Values.tls.commonName }}
+  secretName: {{ .Values.tls.secretName }}
+  dnsNames:
+    {{- range .Values.tls.hosts }}
+    - {{ . | quote }}
+    {{- end }}
+  issuerRef:
+    name: {{ .Values.tls.issuerRef.name }}
+    kind: {{ .Values.tls.issuerRef.kind }}

@@ -1,0 +1,19 @@
+entrypoints: []
+routes:
+  - routeMatch: ""
+    middlewares: []
+    #  - name: ""
+    #    namespace: ""
+    service:
+      name: ""
+      port: ""
+
+tls: 
+  commonName: ""
+  hosts: []
+  secretName: ""
+  issuerRef:
+    name: ""
+    kind: ""
+
+
