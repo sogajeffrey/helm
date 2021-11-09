@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   secure-ingressroute:
   - apiVersion: v2
+    created: "2021-11-09T01:12:57.28585197Z"
+    description: A Helm chart to create a Traefik Ingressroute with HTTPS
+    digest: 40abeaf8e877efec7f2a0513d6089ab3284e69fdbf39c9ae3374f70869408616
+    name: secure-ingressroute
+    type: application
+    urls:
+    - https://github.com/sogajeffrey/helm/releases/download/secure-ingressroute-0.1.1/secure-ingressroute-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     created: "2021-11-09T00:23:17.360431809Z"
     description: A Helm chart to create a Traefik Ingressroute with HTTPS
     digest: e760b5a97af6328b95ccd88166fdd744d5026d303b3d892a3fd61511f327a121
@@ -11,6 +20,16 @@ entries:
     - https://github.com/sogajeffrey/helm/releases/download/secure-ingressroute-0.1.0/secure-ingressroute-0.1.0.tgz
     version: 0.1.0
   wyze-bridge:
+  - apiVersion: v2
+    appVersion: 1.0.2
+    created: "2021-11-09T01:12:57.404734867Z"
+    description: A Helm chart for deploying Wyze Bridge to k8s
+    digest: b1e6ab916f1395f69550721f1331ecc2782f8195973abffdc78fe13581386f24
+    name: wyze-bridge
+    type: application
+    urls:
+    - https://github.com/sogajeffrey/helm/releases/download/wyze-bridge-0.1.5/wyze-bridge-0.1.5.tgz
+    version: 0.1.5
   - apiVersion: v2
     appVersion: 1.0.2
     created: "2021-11-09T00:23:17.440390835Z"
