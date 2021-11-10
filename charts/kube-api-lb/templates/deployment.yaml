@@ -47,13 +47,11 @@ spec:
               subPath: nginx.conf
               readOnly: true
           livenessProbe:
-            httpGet:
-              path: /
-              port: api
+            tcpSocket:
+              port: 6443
           readinessProbe:
-            httpGet:
-              path: /
-              port: api
+            tcpSocket:
+              port: 6443
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

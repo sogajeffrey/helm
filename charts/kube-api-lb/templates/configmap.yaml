@@ -22,7 +22,7 @@ data:
     access_log /dev/stdout basic buffer=32k;
     upstream apis {
         {{- range .Values.kube.nodes }}
-        server {{ . }}:{{ .Values.kube.port }};
+        server {{ .ip }}:{{ .port }};
         {{- end }}
     }
     server {

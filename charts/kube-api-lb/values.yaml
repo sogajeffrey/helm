@@ -29,6 +29,10 @@ securityContext: {}
 
 kube:
   nodes: []
+    # - ip: 
+    #   port: 
+    # - ip: 
+    #   port: 
   port: 6443
 
 service:
