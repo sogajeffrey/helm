@@ -21,7 +21,7 @@ data:
 
     access_log /dev/stdout basic buffer=32k;
     upstream apis {
-        {{- range .nodes }}
+        {{- range .Values.kube.nodes }}
         server {{ . }}:{{ .Values.kube.port }};
         {{- end }}
     }
@@ -29,5 +29,4 @@ data:
         listen {{ .Values.kube.port }};
         proxy_pass apis;
     }
-
     }
