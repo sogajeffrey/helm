@@ -14,6 +14,16 @@ entries:
   kube-api-lb:
   - apiVersion: v2
     appVersion: stable
+    created: "2021-11-10T02:28:55.499148909Z"
+    description: A Helm chart to deploy load balanced nginx for kube api
+    digest: 36463b6672941a4e1a7c6d28f8554617a93571fe694d2d44d48d9777443110df
+    name: kube-api-lb
+    type: application
+    urls:
+    - https://github.com/sogajeffrey/helm/releases/download/kube-api-lb-0.1.2/kube-api-lb-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: stable
     created: "2021-11-10T02:01:59.132663236Z"
     description: A Helm chart to deploy load balanced nginx for kube api
     digest: 29f9dec9017dfe8845e3a340c42537c317df89b8283292bcc7f0f408a8cc0f6f
