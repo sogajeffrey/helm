@@ -3,6 +3,16 @@ entries:
   cloudflare-ddns:
   - apiVersion: v2
     appVersion: latest
+    created: "2021-11-13T17:32:17.33098225Z"
+    description: A Helm chart to deploy cloudflare DDNS on k8s
+    digest: ff725773521d0a96737dc9d9f5fbe0d63c099f83df2eb6c4638d3c0b634a6b51
+    name: cloudflare-ddns
+    type: application
+    urls:
+    - https://github.com/sogajeffrey/helm/releases/download/cloudflare-ddns-0.1.3/cloudflare-ddns-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: latest
     created: "2021-11-13T17:18:15.449070178Z"
     description: A Helm chart to deploy cloudflare DDNS on k8s
     digest: d52f61f22448a7c87df000d8c1cf056a180cb5de685076056ec6c6aa7137af04
