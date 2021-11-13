@@ -41,7 +41,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.ddns.existingSecret.secretName | default .Chart.Name }}
-                key: {{ .Values.ddns.existingSecret.secretKey | default .Values.ddns.apiKey }}
+                key: {{ .Values.ddns.existingSecret.secretKey | default apikey }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
