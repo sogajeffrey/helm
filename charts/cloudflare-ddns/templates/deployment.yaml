@@ -32,16 +32,16 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: PROXIED
-            value: {{ .Values.ddns.proxied }}
+            value: {{ .Values.ddns.proxied | quote }}
           - name: SUBDOMAIN
-            value: {{ .Values.ddns.subdomain }}
+            value: {{ .Values.ddns.subdomain | quote }}
           - name: ZONE
-            value: {{ .Values.ddns.zone }}
+            value: {{ .Values.ddns.zone | quote }}
           - name: API_KEY
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.ddns.existingSecret.secretName | default .Chart.Name }}
-                key: {{ .Values.ddns.existingSecret.secretKey | default apikey }}
+                key: {{ .Values.ddns.existingSecret.secretKey | default "apiKey" }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
