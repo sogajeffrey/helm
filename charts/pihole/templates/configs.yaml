@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+data:
+{{- if .Values.pihole.configs.adlist }}
+  adlists.list: |
+    {{- range .Values.pihole.configs.adlist }}
+    {{ . }}
+    {{- end }}
+{{- end }}
+{{- if .Values.pihole.configs.whitelist }}
+  whitelist.txt: |
+    {{- range .Values.pihole.configs.whitelist }}
+    {{ . }}
+    {{- end }}
+{{- end }}
+{{- if .Values.pihole.configs.blacklist }}
+  blacklist.txt: |
+    {{- range .Values.pihole.configs.blacklist }}
+    {{ . }}
+    {{- end }}
+{{- end }}
+{{- if .Values.pihole.configs.dns }}
+  dns-servers.conf: |
+    {{- range .Values.pihole.configs.dns }}
+    {{ . }}
+    {{- end }}
+{{- end }}

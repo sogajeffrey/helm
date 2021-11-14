@@ -1,8 +1,6 @@
 # Default values for Pihole
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
 
-replicaCount: 1
+replicaCount: 1 # If storage is specified then replicacount will default to 1
 
 image:
   repository: pihole/pihole
@@ -10,10 +8,59 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+pihole:
+  configs:
+    whitelist: []
+    adlist: []
+    blacklist: []
+  admin:
+    existingSecret:
+      enabled: false
+      secretName: ""
+      secretKey: ""
+    password: ""
+    timezone: "America/Los_Angeles"
+    email: ""
+    tempUnit: "f"
+
+service:
+  loadBalancerIP: ""
+
+persistence:
+  enabled: false
+  storageClass: ""
+  size: "2Gi"
+  accessMode: "ReadWriteOnce"
+  annotations: []
+  existingClaim: ""
+
+ingress:
+  enabled: false
+### WIP
+
+secure-ingressroute:
+  enabled: false
+  entrypoints: []
+  routes:
+    - routeMatch: ""
+      middlewares: []
+      #  - name: ""
+      #    namespace: ""
+      service:
+        name: ""
+        port: ""
+        kind: ""
+  tls: 
+    commonName: ""
+    hosts: []
+    secretName: ""
+    issuerRef:
+      name: ""
+      kind: ""
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
 
 podAnnotations: {}
 
@@ -27,21 +74,6 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
-
-pihole:
-  configs:
-    adlist: ""
-    whitelist: ""
-    blacklist: ""
-    enabled: false
-  username: ""
-  password: ""
-
-service:
-  type: ClusterIP
-  rtspPort: 8554
-  hlsPort: 8888
-  rmtpPort: 1935
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

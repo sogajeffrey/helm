@@ -1,6 +1,12 @@
 apiVersion: v2
 name: pihole
 description: A Helm chart for deploying Pihole to k8s
+icon: https://www.creativeturtle.de/wp-content/uploads/2020/04/pihole.png
 type: application
 version: 0.1.0
-appVersion: "v5.0"
+appVersion: "2021.10.1"
+dependencies:
+- name: secure-ingressroute
+  version: 0.1.2
+  repository: https://helm.jeffreyjsu.com
+  condition: secure-ingressroute.enabled

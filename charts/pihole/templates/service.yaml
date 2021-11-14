@@ -1,23 +1,62 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "wyze-bridge.fullname" . }}
+  name: {{ include "pihole.fullname" . }}-dns
   labels:
-    {{- include "wyze-bridge.labels" . | nindent 4 }}
+    {{- include "pihole.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.service.rtspPort }}
-      targetPort: rtsp
+    - port: 53
+      targetPort: 52-tcp
       protocol: TCP
-      name: rtsp
-    - port: {{ .Values.service.hlsPort }}
-      targetPort: hls
-      protocol: TCP
-      name: hls
-    - port: {{ .Values.service.rmtpPort }}
-      targetPort: rmtp
-      protocol: TCP
-      name: rmtp
+      name: 53-tcp
+    - port: 53
+      targetPort: 53-udp
+      protocol: UDP
+      name: 53-udp
   selector:
-    {{- include "wyze-bridge.selectorLabels" . | nindent 4 }}
+    {{- include "pihole.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pihole.fullname" . }}-lb
+  labels:
+    {{- include "pihole.labels" . | nindent 4 }}
+spec:
+  type: LoadBalancer
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  ports:
+    - port: 80
+      targetPort: ui
+      protocol: TCP
+      name: 80-tcp
+  selector:
+    {{- include "pihole.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pihole.fullname" . }}
+  labels:
+    {{- include "pihole.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  externalIPs:
+  - {{ .Values.service.loadBalancerIP }}
+  ports:
+    - port: 80
+      targetPort: ui
+      protocol: TCP
+      name: pihole-admin
+    - port: 53
+      targetPort: 53-tcp
+      protocol: TCP
+      name: dns-tcp
+    - port: 53
+      targetPort: 53-udp
+      protocol: UDP
+      name: dns-udp
+  selector:
+    {{- include "pihole.selectorLabels" . | nindent 4 }}

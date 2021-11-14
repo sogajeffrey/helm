@@ -31,38 +31,90 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          - name: WYZE_EMAIL
+          - name: TZ
+            value: {{ .Values.pihole.admin.timezone }}
+          - name: WEBPASSWORD
+            {{- if or .Values.pihole.admin.password .Values.pihole.admin.existingSecret.enabled }}
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.wyze.existingSecret.secretName | default .Chart.Name }}
-                key: {{ .Values.wyze.existingSecret.usernameKey | default "wyze-username" }}
-          - name: WYZE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.wyze.existingSecret.secretName | default .Chart.Name }}
-                key: {{ .Values.wyze.existingSecret.passwordKey | default "wyze-password" }}
+                name: {{ .Values.pihole.admin.existingSecret.secretName | default .Release.Name }}
+                key: {{ .Values.pihole.admin.existingSecret.secretkey | default "adminpass" }}
+            {{- else }}
+            value: " "
+            {{- end }}
+          - name: ADMIN_EMAIL
+            value: {{ .Values.pihole.admin.email }}
+          - name: TEMPERATUREUNIT
+            value: {{ .Values.pihole.admin.tempUnit }}
           ports:
-            - name: rmtp
-              containerPort: 1935
+            - name: ui
+              containerPort: 80
               protocol: TCP
-            - name: rstp
-              containerPort: 8554
+            - name: 53-tcp
+              containerPort: 53
               protocol: TCP
-            - name: hls
-              containerPort: 8888
-              protocol: TCP
+            - name: 53-udp
+              containerPort: 53
+              protocol: UDP
+          volumeMounts:
+            - name: pihole-data
+              mountPath: /etc/pihole
+          {{- if .Values.pihole.configs.adlist }}
+            - name: pihole-configs
+              mountPath: /etc/pihole/adlists.list
+              subPath: adlists.list
+              readOnly: true
+          {{- end }}
+          {{- if .Values.pihole.configs.whitelist }}
+            - name: pihole-configs
+              mountPath: /etc/pihole/whitelist.txt
+              subPath: whitelist.txt
+              readOnly: true
+          {{- end }}
+          {{- if .Values.pihole.configs.blacklist }}
+            - name: pihole-configs
+              mountPath: /etc/pihole/blacklist.txt
+              subPath: blacklist.txt
+              readOnly: true
+          {{- end }}
           livenessProbe:
             tcpSocket:
-              port: 8554
+              port: 80
           readinessProbe:
             tcpSocket:
-              port: 8554
+              port: 80
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+      {{- if or .Values.pihole.configs.adlist .Values.pihole.configs.whitelist .Values.pihole.configs.blacklist .Values.pihole.configs.dns }}
+        - name: pihole-configs
+          configMap:
+            name: {{ .Release.Name }}
+            items:
+            {{- if .Values.pihole.configs.adlist }}
+              - key: adlists.list
+                path: adlists.list
+            {{- end }}
+            {{- if .Values.pihole.configs.whitelist }}
+              - key: whitelist.txt
+                path: whitelist.txt
+            {{- end }}
+            {{- if .Values.pihole.configs.blacklist }}
+              - key: blacklist.txt
+                path: blacklist.txt
+            {{- end }}
+        {{- end }}
+        - name: pihole-data
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "pihole.fullname" . }}-pv{{- end }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}

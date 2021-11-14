@@ -1,0 +1,6 @@
+dependencies:
+- name: secure-ingressroute
+  repository: https://helm.jeffreyjsu.com
+  version: 0.1.1
+digest: sha256:efdd096824347a7dd7afac619dd33494d0680dd7685157fc9a9cb378e6d7de1a
+generated: "2021-11-14T10:49:02.744065-08:00"

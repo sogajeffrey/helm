@@ -33,4 +33,4 @@ spec:
           {{- end }}
     {{- end }}  
   tls:
-    secretName: {{ .Values.tls.secretName }}
+    secretName: {{ $fullName }}-cert
