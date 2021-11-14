@@ -1,0 +1,94 @@
+# Default values for Pihole
+
+replicaCount: 1 # If storage is specified then replicacount will default to 1
+
+image:
+  repository: pihole/pihole
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+pihole:
+  configs:
+    whitelist: []
+    adlist: []
+    blacklist: []
+  admin:
+    existingSecret:
+      enabled: false
+      secretName: ""
+      secretKey: ""
+    password: ""
+    timezone: "America/Los_Angeles"
+    email: ""
+    tempUnit: "f"
+
+service:
+  loadBalancerIP: ""
+
+persistence:
+  enabled: false
+  storageClass: ""
+  size: "2Gi"
+  accessMode: "ReadWriteOnce"
+  annotations: []
+  existingClaim: ""
+
+ingress:
+  enabled: false
+### WIP
+
+secure-ingressroute:
+  enabled: false
+  entrypoints: []
+  routes:
+    - routeMatch: ""
+      middlewares: []
+      #  - name: ""
+      #    namespace: ""
+      service:
+        name: ""
+        port: ""
+        kind: ""
+  tls: 
+    commonName: ""
+    hosts: []
+    secretName: ""
+    issuerRef:
+      name: ""
+      kind: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
