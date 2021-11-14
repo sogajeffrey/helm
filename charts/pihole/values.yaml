@@ -38,26 +38,6 @@ ingress:
   enabled: false
 ### WIP
 
-secure-ingressroute:
-  enabled: false
-  entrypoints: []
-  routes:
-    - routeMatch: ""
-      middlewares: []
-      #  - name: ""
-      #    namespace: ""
-      service:
-        name: ""
-        port: ""
-        kind: ""
-  tls: 
-    commonName: ""
-    hosts: []
-    secretName: ""
-    issuerRef:
-      name: ""
-      kind: ""
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
